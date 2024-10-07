@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project:Etch-a-Sketch</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .grid_container {
+        display: flex;
+        height: 400px;
+        width: 400px;
+        flex-wrap: wrap;
+      }
+      .grid_item {
+        width: 25px;
+        height: 25px;
+        border: 1px solid black;
+        background-color: lightblue;
+        box-sizing: border-box;
+      }
+      .grid_item:hover{
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid_container"></div>
+    <button></button>
+
+    <script>
+      const girdContainer = document.querySelector(".grid_container");
+      for (let i = 1; i <= 16 * 16; i++) {
+        const grid_box = document.createElement("div");
+        grid_box.setAttribute("class", "grid_item");
+        girdContainer.appendChild(grid_box);
+      }
+    </script>
+  </body>
+</html>
