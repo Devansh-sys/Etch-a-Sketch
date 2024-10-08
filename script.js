@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     Sqrs = prompt("How many squares do you want each side!?", 16);
     console.log(Sqrs);
     if(Sqrs > 100 || Sqrs===null){
-      alert("cannot choose greater than 100 or null !! Setting size to 20");
-      Sqrs = 20;
+      alert("cannot choose greater than 100 or null !! Setting size to 16(default)");
+      Sqrs = 16;
     }
 
     const prev_grid_container = document.querySelector('.grid_Container');
@@ -18,6 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const gridContainer = document.createElement("div");
     gridContainer.setAttribute("class", "grid_Container");
+    
+    //feature added of randomizing the sqr color on every interaction
+    const color = getRandomColor();
+    console.log(color);
+    gridContainer.style.cssText= `background-color:${color};`;
 
       //     Type Coercion: JavaScript implicitly converts null to a number before performing arithmetic operations. When you multiply two null values, JavaScript coerces each null to 0.
     // Thus, null * null becomes 0 * 0, which equals 0.
@@ -35,6 +40,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const body_container = document.querySelector("body");
     body_container.appendChild(gridContainer);
   });
+
+  function getRandomColor(){
+
+//     it is giving me the output undefined at 15 
+
+// The issue arises because the string letter = "123456789ABCDEF" only contains 15 characters, indexed from 0 to 14. However, you're using Math.random() * 16 to generate a random index, which can sometimes generate 15 (out of the valid range for your string). This causes an undefined value to be returned.
+
+// Fix
+// You need to update the letter string to include a complete hexadecimal range, which should be "0123456789ABCDEF" (note the added 0 at the beginning).
+
+
+    const letter = "0123456789ABCDEF";
+    let color = '#';
+    for(let i=0;i<6;i++){
+      const randomIndex = Math.floor(Math.random() * 16);
+
+      // console.log(`Random index: ${randomIndex}, Letter: ${letter[randomIndex]}`); 
+
+      color += letter[randomIndex];
+    }
+    return color;
+  }
 
 
 });
