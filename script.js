@@ -15,9 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //taking prevOpacity of grid not the grid container to ensure full opacity after 10 interactions 
     const prev_grids = document.querySelector('.grid_item');
-    let computedStyle = window.getComputedStyle(prev_grids);
-    let prevOpacity = computedStyle.opacity;
-    console.log("prev opacity is ",prevOpacity);
+    
     //below removing previous container
     if(prev_grid_container !== null){
       prev_grid_container.remove();
@@ -25,29 +23,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const gridContainer = document.createElement("div");
     gridContainer.setAttribute("class", "grid_Container");
-    
-    //feature added of randomizing the sqr color on every interaction
-    const color = getRandomColor();
-    console.log("Random color is",color);
-    
-
+ 
       //Type Coercion: JavaScript implicitly converts null to a number before performing arithmetic operations. When you multiply two null values, JavaScript coerces each null to 0.
     // Thus, null * null becomes 0 * 0, which equals 0.
     console.log("total squares is",Sqrs * Sqrs);
-    let presentOpacity;
-
+    let prevOpacity = 0.0001;
+   
     for (let i = 1; i <= Sqrs * Sqrs; i++) {
       const grid_box = document.createElement("div");
 
       grid_box.setAttribute("class", "grid_item");
       
-      if(prevOpacity < 1){
-        presentOpacity = parseFloat(prevOpacity)+0.1;
-      }else{
-        presentOpacity = 0;
-      }
-      console.log("opacity presently is ",presentOpacity);
-      grid_box.style.cssText = `width:${600 / Sqrs}px;height:${600 / Sqrs}px;background-color:${color};opacity:${presentOpacity}`;
+      
+      grid_box.style.cssText = `width:${600 / Sqrs}px;height:${600 / Sqrs}px;border:0.3px solid black`;
+      
+      let presentOpacity;
+      grid_box.addEventListener('mouseenter',()=>{
+        
+
+        if(prevOpacity < 1){
+          presentOpacity = parseFloat(prevOpacity)+0.1;
+        }else{
+          presentOpacity = 0;
+        }
+        console.log("opacity presently is ",presentOpacity);
+        //feature added of randomizing the sqr color on every interaction
+        const color = getRandomColor();
+        console.log("Random color is",color);
+        grid_box.style.backgroundColor = `${color}`;
+        grid_box.style.opacity = `${presentOpacity}`;
+
+        let computedStyle = window.getComputedStyle(grid_box);
+        prevOpacity = computedStyle.opacity;
+        console.log("prev opacity is ",prevOpacity);
+        }
+      );
+      
 
       gridContainer.appendChild(grid_box);
     }

@@ -15,7 +15,7 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-        background-color: #e47907b1;
+        background-color: #ffffffb1;
         justify-content: center;
         align-items: center;
         height: 100vh;
@@ -39,11 +39,7 @@
         border: 1px solid rgb(255, 255, 255);
         box-sizing: border-box;
       }
-      .grid_item:hover {
-         background-color: rgb(255, 253, 253) !important; /*The !important in the .my-element:hover CSS rule will ensure that the background color change on hover takes precedence over the inline backgroundColor set in JavaScript. */
-         opacity : 1 !important;
-
-      }
+     
     </style>
 
     <script src="script.js"></script>
@@ -56,11 +52,48 @@
     <script>
       const gridsParent = document.querySelector(".grid_Container");
       // gridsParent.style.cssText = "background-color:#b9dfee";
+      let prevOpacity = 0.0001;
       for (let i = 1; i <= 16 * 16; i++) {
         const grid_box = document.createElement("div");
         grid_box.setAttribute("class", "grid_item");
-        grid_box.style.cssText = `width:${600 / 16}px;height:${600 / 16}px;opacity:0;backgroundColor:#b9dfee;`;
+        grid_box.style.cssText = `width:${600 / 16}px;height:${600 / 16}px;border:0.3px solid black`;
+        
+        grid_box.addEventListener('mouseenter',()=>{
+        
+          let presentOpacity;
+          if(prevOpacity < 1){
+            presentOpacity = parseFloat(prevOpacity)+0.1;
+          }else{
+            presentOpacity = 0;
+          }
+          console.log("opacity presently is ",presentOpacity);
+          //feature added of randomizing the sqr color on every interaction
+          const color = getRandomColor();
+          console.log("Random color is",color);
+          grid_box.style.backgroundColor = `${color}`;
+          grid_box.style.opacity = `${presentOpacity}`;
+
+          let computedStyle = window.getComputedStyle(grid_box);
+          prevOpacity = computedStyle.opacity;
+          console.log("prev opacity is ",prevOpacity);
+          }
+      );
         gridsParent.appendChild(grid_box);
+
+
+      function getRandomColor(){
+        const letter = "0123456789ABCDEF";
+        let color = '#';
+        for(let i=0;i<6;i++){
+          const randomIndex = Math.floor(Math.random() * 16);
+
+          // console.log(`Random index: ${randomIndex}, Letter: ${letter[randomIndex]}`); 
+
+          color += letter[randomIndex];
+        }
+        return color;
+      }
+
       }
     </script>
   </body>
