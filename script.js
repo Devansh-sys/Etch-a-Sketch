@@ -5,13 +5,20 @@ document.addEventListener("DOMContentLoaded", () => {
   let Sqrs;
   buttonTOChoose.addEventListener("click", () => {
     Sqrs = prompt("How many squares do you want each side!?", 16);
-    console.log(Sqrs);
+
     if(Sqrs > 100 || Sqrs===null){
       alert("cannot choose greater than 100 or null !! Setting size to 16(default)");
       Sqrs = 16;
     }
 
     const prev_grid_container = document.querySelector('.grid_Container');
+
+    //taking prevOpacity of grid not the grid container to ensure full opacity after 10 interactions 
+    const prev_grids = document.querySelector('.grid_item');
+    let computedStyle = window.getComputedStyle(prev_grids);
+    let prevOpacity = computedStyle.opacity;
+    console.log("prev opacity is ",prevOpacity);
+    //below removing previous container
     if(prev_grid_container !== null){
       prev_grid_container.remove();
     }
@@ -21,18 +28,26 @@ document.addEventListener("DOMContentLoaded", () => {
     
     //feature added of randomizing the sqr color on every interaction
     const color = getRandomColor();
-    console.log(color);
-    gridContainer.style.cssText= `background-color:${color};`;
+    console.log("Random color is",color);
+    
 
-      //     Type Coercion: JavaScript implicitly converts null to a number before performing arithmetic operations. When you multiply two null values, JavaScript coerces each null to 0.
+      //Type Coercion: JavaScript implicitly converts null to a number before performing arithmetic operations. When you multiply two null values, JavaScript coerces each null to 0.
     // Thus, null * null becomes 0 * 0, which equals 0.
-    console.log(Sqrs * Sqrs);
+    console.log("total squares is",Sqrs * Sqrs);
+    let presentOpacity;
 
     for (let i = 1; i <= Sqrs * Sqrs; i++) {
       const grid_box = document.createElement("div");
 
       grid_box.setAttribute("class", "grid_item");
-      grid_box.style.cssText = `width:${600 / Sqrs}px;height:${600 / Sqrs}px`;
+      
+      if(prevOpacity < 1){
+        presentOpacity = parseFloat(prevOpacity)+0.1;
+      }else{
+        presentOpacity = 0;
+      }
+      console.log("opacity presently is ",presentOpacity);
+      grid_box.style.cssText = `width:${600 / Sqrs}px;height:${600 / Sqrs}px;background-color:${color};opacity:${presentOpacity}`;
 
       gridContainer.appendChild(grid_box);
     }
