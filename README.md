@@ -1,6 +1,6 @@
 This is my Basic poject to learn DOM manipulation in js
 
-[Etch-a-Sketch Live Demo](https://devansh-sys.github.io/Etch-a-Sketch-/)
+[Etch-a-Sketch Live Demo](https://devansh-sys.github.io/Etch-a-Sketch/)
 
 # Etch-a-Sketch
 it is having grids in the square that square is the     gridContainer.
